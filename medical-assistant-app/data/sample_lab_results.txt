@@ -1,0 +1,82 @@
+MEDICAL LABORATORY RESULTS
+
+Patient: John Smith
+DOB: 05/12/1978
+Medical Record #: PAT001
+Collection Date: 04/28/2023
+Report Date: 04/30/2023
+
+COMPLETE BLOOD COUNT (CBC)
+
+Test                Result      Reference Range      Flag
+--------------------------------------------------------------
+WBC                 6.8         4.5-11.0 x10^9/L     
+RBC                 4.9         4.5-5.9 x10^12/L     
+Hemoglobin          14.2        13.5-17.5 g/dL       
+Hematocrit          42.1        41.0-53.0 %          
+MCV                 86          80-100 fL            
+MCH                 29.0        27.0-31.0 pg         
+MCHC                33.7        32.0-36.0 g/dL       
+RDW                 13.1        11.5-14.5 %          
+Platelets           245         150-450 x10^9/L      
+
+DIFFERENTIAL
+
+Test                Result      Reference Range      Flag
+--------------------------------------------------------------
+Neutrophils         58          40-70 %              
+Lymphocytes         32          20-40 %              
+Monocytes           7           2-10 %               
+Eosinophils         2           1-6 %                
+Basophils           1           0-2 %                
+
+COMPREHENSIVE METABOLIC PANEL
+
+Test                Result      Reference Range      Flag
+--------------------------------------------------------------
+Glucose             105         70-99 mg/dL          H
+BUN                 15          7-20 mg/dL           
+Creatinine          0.9         0.6-1.2 mg/dL        
+eGFR                >90         >60 mL/min/1.73m²    
+Sodium              139         136-145 mmol/L       
+Potassium           4.1         3.5-5.1 mmol/L       
+Chloride            102         98-107 mmol/L        
+CO2                 24          21-32 mmol/L         
+Calcium             9.4         8.5-10.2 mg/dL       
+Total Protein       7.0         6.0-8.3 g/dL         
+Albumin             4.3         3.5-5.0 g/dL         
+Total Bilirubin     0.7         0.1-1.2 mg/dL        
+Alkaline Phosphatase 68         40-129 U/L           
+AST                 24          0-40 U/L             
+ALT                 30          0-44 U/L             
+
+LIPID PANEL
+
+Test                Result      Reference Range      Flag
+--------------------------------------------------------------
+Total Cholesterol   210         <200 mg/dL           H
+Triglycerides       150         <150 mg/dL           
+HDL Cholesterol     45          >40 mg/dL            
+LDL Cholesterol     135         <100 mg/dL           H
+Cholesterol/HDL Ratio 4.7       <5.0                 
+
+HEMOGLOBIN A1C
+
+Test                Result      Reference Range      Flag
+--------------------------------------------------------------
+HbA1c               6.2         <5.7 %               H
+
+COMMENTS:
+- Fasting glucose and HbA1c are elevated, consistent with prediabetes
+- LDL cholesterol and total cholesterol are above optimal levels
+- Other values within normal limits
+
+RECOMMENDATIONS:
+- Follow up with primary care physician for management of prediabetes and hyperlipidemia
+- Consider lifestyle modifications including diet and exercise
+- Repeat lipid panel and HbA1c in 3-6 months
+
+Laboratory Director: Dr. Rebecca Chen, MD, PhD
+Lab Accreditation #: CAP 7123456
+
+This is a sample document for demonstration purposes only.

@@ -1,0 +1,6 @@
+external_id,name,email,age,medical_history
+"PAT001","John Smith","john.smith@example.com",45,"Hypertension, Type 2 Diabetes"
+"PAT002","Emily Johnson","emily.j@example.com",32,"Asthma, Seasonal allergies"
+"PAT003","Michael Chen","mchen@example.com",58,"Coronary artery disease, Hyperlipidemia"
+"PAT004","Sarah Williams","swilliams@example.com",29,"Anxiety disorder, Migraine"
+"PAT005","Robert Garcia","rgarcia@example.com",67,"Osteoarthritis, GERD, Hypertension"

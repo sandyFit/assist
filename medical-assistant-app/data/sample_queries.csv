@@ -1,0 +1,11 @@
+patient_id,content,priority,status,created_at
+1,"I've been experiencing severe headaches for the past week. They're mostly on the right side of my head and sometimes come with nausea.",HIGH,REVIEWED,2023-05-01 10:15:00
+1,"My blood pressure readings have been higher than normal lately. Yesterday it was 145/95. I'm already taking lisinopril.",MEDIUM,REVIEWED,2023-05-03 14:30:00
+2,"I've noticed a rash on my arm that appeared after starting a new medication. It's red and slightly itchy but not painful.",MEDIUM,REVIEWED,2023-05-02 09:45:00
+2,"I've been having trouble sleeping for the past month. I can fall asleep but wake up multiple times during the night.",LOW,AWAITING_REVIEW,2023-05-04 16:20:00
+3,"I'm experiencing shortness of breath when climbing stairs or walking uphill. I don't have chest pain but feel very tired afterward.",HIGH,PROCESSING,2023-05-05 11:10:00
+3,"I've been having digestive issues after eating dairy products. Could I have developed lactose intolerance?",LOW,PENDING,2023-05-06 13:25:00
+4,"I've been feeling dizzy when standing up quickly. It lasts for a few seconds and then goes away. This has been happening for about a week.",MEDIUM,PROCESSING,2023-05-07 10:50:00
+4,"I'm having pain in my lower back that radiates down my left leg. It gets worse when sitting for long periods.",MEDIUM,AWAITING_REVIEW,2023-05-08 15:40:00
+5,"I've been experiencing heart palpitations occasionally. They last for a few minutes and then stop. I don't have any other symptoms.",HIGH,REVIEWED,2023-05-09 12:30:00
+5,"I've noticed blood in my urine this morning. No pain or other symptoms, but I'm concerned.",URGENT,PROCESSING,2023-05-10 08:15:00

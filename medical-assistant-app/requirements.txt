@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+streamlit
+sqlmodel
+python-multipart
+pydantic
+openai
+httpx
+python-dotenv
+pytest

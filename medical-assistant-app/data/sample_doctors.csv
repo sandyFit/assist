@@ -1,0 +1,6 @@
+external_id,name,email,specialty
+"DOC001","Dr. Lisa Chen","lisa.chen@medclinic.com","Internal Medicine"
+"DOC002","Dr. James Wilson","jwilson@medclinic.com","Cardiology"
+"DOC003","Dr. Maria Rodriguez","mrodriguez@medclinic.com","Family Medicine"
+"DOC004","Dr. David Kim","dkim@medclinic.com","Neurology"
+"DOC005","Dr. Sarah Johnson","sjohnson@medclinic.com","Dermatology"

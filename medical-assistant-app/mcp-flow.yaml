@@ -1,0 +1,164 @@
+# Medical Assistant App MCP Flow Configuration
+# This file describes the orchestration of tools and services for the medical assistant app
+
+name: medical-assistant-flow
+version: 1.0.0
+description: |
+  Orchestration flow for the Medical AI Assistant application.
+  This flow defines how different components interact while maintaining
+  human oversight for all AI-generated medical content.
+
+# Define the services used in the application
+services:
+  # FastAPI backend service
+  api:
+    type: fastapi
+    entry_point: app.main:app
+    port: 8000
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    health_check:
+      path: /health
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Streamlit frontend service
+  ui:
+    type: streamlit
+    entry_point: ui.frontend:main
+    port: 8501
+    depends_on:
+      - api
+    environment:
+      - API_HOST=${API_HOST}
+      - API_PORT=${API_PORT}
+
+# Define the data flows between components
+flows:
+  # Patient query flow
+  patient_query:
+    trigger: ui.submit_query
+    steps:
+      - service: api
+        operation: create_query
+        next: triage_query
+      
+      - id: triage_query
+        service: api
+        operation: triage_query
+        next: generate_ai_suggestion
+      
+      - id: generate_ai_suggestion
+        service: api
+        operation: generate_suggestion
+        next: await_doctor_review
+        config:
+          model: gpt-4
+          temperature: 0.2
+          safety_filter: true
+      
+      - id: await_doctor_review
+        service: api
+        operation: await_review
+        next: notify_patient
+      
+      - id: notify_patient
+        service: ui
+        operation: update_query_status
+
+  # File upload flow
+  file_upload:
+    trigger: ui.upload_file
+    steps:
+      - service: api
+        operation: validate_file
+        next: store_file
+        config:
+          max_size_mb: 10
+          allowed_types:
+            - application/pdf
+            - image/jpeg
+            - image/png
+            - text/plain
+            - text/csv
+      
+      - id: store_file
+        service: api
+        operation: store_file
+        next: process_file_with_query
+      
+      - id: process_file_with_query
+        service: api
+        operation: process_query_with_files
+        next: await_doctor_review
+        config:
+          extract_text: true
+          analyze_content: true
+      
+      - id: await_doctor_review
+        service: api
+        operation: await_review
+
+  # Doctor review flow
+  doctor_review:
+    trigger: ui.submit_review
+    steps:
+      - service: api
+        operation: create_review
+        next: update_query_status
+      
+      - id: update_query_status
+        service: api
+        operation: update_query_status
+        next: notify_patient
+      
+      - id: notify_patient
+        service: ui
+        operation: update_query_status
+
+# Define safety and monitoring configurations
+safety:
+  # Escalation thresholds for query triage
+  escalation:
+    safety_score_threshold: 0.6
+    urgent_priority_auto_escalate: true
+    escalation_notification:
+      email: true
+      in_app: true
+  
+  # Content filtering for AI suggestions
+  content_filtering:
+    enabled: true
+    min_confidence_threshold: 0.7
+    prohibited_content:
+      - specific_medication_recommendations
+      - definitive_diagnoses
+      - emergency_dismissal
+
+# Monitoring and observability
+monitoring:
+  metrics:
+    - name: query_volume
+      description: Number of patient queries per time period
+    - name: response_time
+      description: Time from query submission to doctor review
+    - name: ai_suggestion_approval_rate
+      description: Percentage of AI suggestions approved without modification
+  
+  alerts:
+    - name: high_query_volume
+      condition: query_volume > 100 per hour
+    - name: slow_response_time
+      condition: response_time > 24 hours
+    - name: low_approval_rate
+      condition: ai_suggestion_approval_rate < 70%
+
+# Development and testing configurations
+development:
+  seed_data: seed_db.py
+  test_command: pytest
+  local_development:
+    api_command: uvicorn app.main:app --reload
+    ui_command: streamlit run ui/frontend.py
