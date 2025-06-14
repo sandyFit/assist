@@ -1,0 +1,37 @@
+Patient Name: Jane Doe
+Patient ID: 20250614
+Date of Examination: 2025-06-14
+Physician: Dr. John Smith
+
+Chief Complaint:
+Patient reports increased thirst, frequent urination, and fatigue over the past 3 weeks.
+
+Medical History:
+- Type 2 Diabetes Mellitus diagnosed in 2022
+- Hypertension
+- No known drug allergies
+
+Current Medications:
+- Metformin 1000mg twice daily
+- Lisinopril 10mg daily
+
+Physical Examination:
+- Height: 165 cm
+- Weight: 78 kg
+- BMI: 28.7 (Overweight)
+- Blood Pressure: 138/86 mmHg
+- Heart Rate: 82 bpm
+- Fasting Blood Glucose: 178 mg/dL
+- HbA1c: 8.2%
+
+Assessment:
+Patient demonstrates poor glycemic control. Symptoms likely due to hyperglycemia.
+
+Plan:
+- Increase Metformin to 1500mg daily
+- Recommend dietary consultation for carbohydrate management
+- Advise daily blood glucose monitoring
+- Schedule follow-up in 4 weeks
+
+Notes:
+Patient was advised to seek emergency care if symptoms worsen or signs of ketoacidosis appear (e.g., nausea, confusion, rapid breathing).

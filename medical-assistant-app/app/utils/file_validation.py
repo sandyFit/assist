@@ -1,6 +1,7 @@
 from fastapi import UploadFile
 import os
 from typing import Dict, Any
+import fitz  # PyMuPDF
 
 # Maximum file size (10 MB)
 MAX_FILE_SIZE = 10 * 1024 * 1024
@@ -75,6 +76,13 @@ def validate_file(file: UploadFile) -> Dict[str, Any]:
         "valid": True,
         "message": "File is valid"
     }
+    
+def extract_text_from_pdf(file_bytes: bytes) -> str:
+    doc = fitz.open(stream=file_bytes, filetype="pdf")
+    return "\n".join([page.get_text() for page in doc])
+
+def extract_text_from_txt(file_bytes: bytes) -> str:
+    return file_bytes.decode("utf-8", errors="ignore")
 
 def sanitize_filename(filename: str) -> str:
     """Sanitize filename to prevent path traversal and other security issues"""

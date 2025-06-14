@@ -71,6 +71,7 @@ class File(TimestampModel, table=True):
     file_path: str
     file_type: str
     file_size: int
+    text_content: Optional[str] = None
     
     # Relationships
     query: Query = Relationship(back_populates="files")
