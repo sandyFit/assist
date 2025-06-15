@@ -41,7 +41,6 @@ async def create_review(
     review_data: ReviewCreate,
     session: Session = Depends(get_session)
 ):
-    # Check if query exists and is awaiting review
     query = session.get(Query, query_id)
     if not query:
         raise HTTPException(
@@ -55,7 +54,6 @@ async def create_review(
             detail=f"Query with ID {query_id} is not awaiting review (current status: {query.status})"
         )
     
-    # Check if doctor exists
     doctor = session.get(Doctor, review_data.doctor_id)
     if not doctor:
         raise HTTPException(
@@ -63,8 +61,6 @@ async def create_review(
             detail=f"Doctor with ID {review_data.doctor_id} not found"
         )
     
-    # REMOVED: Check for AI suggestion requirement - making it optional for demo
-    # Check if review already exists
     existing_review = session.exec(
         select(Review).where(Review.query_id == query_id)
     ).first()
@@ -74,7 +70,6 @@ async def create_review(
             detail=f"Review already exists for query with ID {query_id}"
         )
     
-    # Create new review
     review = Review(
         query_id=query_id,
         doctor_id=review_data.doctor_id,
@@ -83,17 +78,14 @@ async def create_review(
         notes=review_data.notes
     )
     
-    # Update query status
     query.status = QueryStatus.REVIEWED
     query.updated_at = datetime.utcnow()
     
-    # Add to database
     session.add(review)
     session.add(query)
     session.commit()
     session.refresh(review)
     
-    # Return the created review
     return ReviewResponse(
         id=review.id,
         query_id=review.query_id,
@@ -114,26 +106,19 @@ async def get_reviews(
     approved: Optional[bool] = None,
     session: Session = Depends(get_session)
 ):
-    # Build query
     query = select(Review)
     
-    # Apply filters if provided
     if doctor_id:
         query = query.where(Review.doctor_id == doctor_id)
     if approved is not None:
         query = query.where(Review.approved == approved)
     
-    # Get total count for pagination
     total = session.exec(query).all()
     total_count = len(total)
     
-    # Apply pagination
     query = query.offset(skip).limit(limit)
-    
-    # Execute query
     results = session.exec(query).all()
     
-    # Convert to response model
     reviews = [
         ReviewResponse(
             id=r.id,
@@ -155,7 +140,6 @@ async def get_review_by_query(
     query_id: int,
     session: Session = Depends(get_session)
 ):
-    # Get review for query
     review = session.exec(
         select(Review).where(Review.query_id == query_id)
     ).first()
@@ -165,3 +149,14 @@ async def get_review_by_query(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"No review found for query with ID {query_id}"
         )
+    
+    return ReviewResponse(
+        id=review.id,
+        query_id=review.query_id,
+        doctor_id=review.doctor_id,
+        content=review.content,
+        approved=review.approved,
+        notes=review.notes,
+        created_at=review.created_at,
+        updated_at=review.updated_at
+    )
