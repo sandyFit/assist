@@ -9,3 +9,4 @@ httpx
 python-dotenv
 pytest
 PyMuPDF
+python-dotenv>=1.0.0
