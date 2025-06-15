@@ -1,9 +1,11 @@
 🩺 Assist AI - Medical Assistant Platform
+
 A human-in-the-loop AI platform designed to bridge the communication gap between patients with chronic conditions and their doctors.
 
 This project was developed for a hackathon to demonstrate how AI can empower healthcare professionals and reassure patients by acting as an intelligent, safe, and efficient intermediary. It provides a draft suggestion for patient queries which is always reviewed and approved by a doctor before being sent.
 
 🖼️ Project Gallery
+
 A brief look at the Patient and Doctor portals.
 
 Patient Portal - Submit Query
@@ -15,9 +17,11 @@ Doctor Portal - Review Dashboard
 (Insert screenshot of the doctor's dashboard with pending queries here)
 
 🚀 The Problem
+
 For millions living with chronic diseases like diabetes, timely access to their doctor for non-emergency questions is a constant challenge. A strange blood sugar reading or a question about a meal can cause significant anxiety. This "care gap" creates a communication bottleneck for doctors and leaves patients feeling uncertain. Assist AI was built to solve this problem.
 
 ✨ The Solution: How It Works
+
 Assist AI provides a seamless and trustworthy workflow:
 
 Patient Submits a Query: A patient logs into their portal and submits a health-related question, optionally attaching relevant documents like lab results.
