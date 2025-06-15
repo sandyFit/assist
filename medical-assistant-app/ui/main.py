@@ -4,8 +4,7 @@ import streamlit as st
 from src.patient_page import show_patient_ui
 from src.doctor_page import show_doctor_ui
 from src.welcome_page import show_welcome_ui
-from dotenv import load_dotenv
-load_dotenv()
+
 
 # Hide default navigation
 st.set_page_config(
