@@ -19,16 +19,15 @@ def show_patient_ui():
         with st.form("query_form"):
             query_text = st.text_area("Your medical question:", height=150)
             
-            # File upload
-            uploaded_file = st.file_uploader("Upload relevant medical documents (optional)", 
-                                           type=["pdf", "txt"])
+            uploaded_file = st.file_uploader(
+                "Upload relevant medical documents (optional)", 
+                type=["pdf", "txt"]
+            )
             
             submitted = st.form_submit_button("Submit Query")
             
             if submitted and query_text:
-                # Submit query to API
                 try:
-                    # Create query
                     query_response = requests.post(
                         f"{API_URL}/query/",
                         json={
@@ -36,26 +35,24 @@ def show_patient_ui():
                             "content": query_text
                         }
                     )
-                    # st.write("🟢 Query response:", query_response.status_code)
-                    # st.write("🔎 Query response content:", query_response.text)
 
                     if query_response.status_code == 201:
                         query_data = query_response.json()
                         query_id = query_data["id"]
                         
-                        # Upload file if provided
                         if uploaded_file:
-                            files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
-                            # Fixed URL - remove extra 'file' prefix
+                            files = {
+                                "file": (
+                                    uploaded_file.name,
+                                    uploaded_file.getvalue(),
+                                    uploaded_file.type
+                                )
+                            }
                             with st.spinner("📤 Uploading file and extracting text..."):
                                 file_response = requests.post(
                                     f"{API_URL}/file/{query_id}/upload",
                                     files=files
                                 )
-
-                            
-                            # st.write(f"🟢 File upload response: {file_response.status_code}")
-                            # st.write(f"🔎 File upload content: {file_response.text}")
 
                             if file_response.status_code == 201:
                                 file_data = file_response.json()
@@ -65,8 +62,6 @@ def show_patient_ui():
                                     st.code(extracted_text[:1000], language="text")
                                 else:
                                     st.info("File uploaded successfully, but no text content was extracted.")
-                                
-                                # st.json(file_data)
                             else:
                                 st.error(f"Error uploading file: {file_response.text}")
 
@@ -82,11 +77,9 @@ def show_patient_ui():
         st.header("My Queries")
         st.write("View the status and responses to your previous queries.")
         
-        # Refresh button
         if st.button("Refresh Queries"):
             st.rerun()
         
-        # Get queries from API
         try:
             response = requests.get(
                 f"{API_URL}/query/",
@@ -106,7 +99,7 @@ def show_patient_ui():
                             st.write(f"**Priority:** {query['priority']}")
                             st.write(f"**Submitted:** {query['created_at']}")
                             
-                            # Show uploaded files if any
+                            # Uploaded files
                             try:
                                 files_response = requests.get(f"{API_URL}/file/{query['id']}")
                                 if files_response.status_code == 200:
@@ -119,10 +112,30 @@ def show_patient_ui():
                                                 st.write("  **Extracted Text:**")
                                                 st.code(file_info["text_content"][:500], language="text")
                             except:
-                                pass  # Ignore file retrieval errors
-                            
-                            # Get review if available
-                            if query['status'] == "reviewed" or query['status'] == "completed":
+                                pass
+
+                            # AI suggestion
+                            if query['status'] == "awaiting_review":
+                                ai_key = f"ai_suggestion_{query['id']}"
+                                if ai_key not in st.session_state:
+                                    try:
+                                        ai_response = requests.post(
+                                            f"{API_URL}/review/{query['id']}/ai-suggestion"
+                                        )
+                                        if ai_response.status_code == 200:
+                                            ai_data = ai_response.json()
+                                            st.session_state[ai_key] = ai_data["content"]
+                                        else:
+                                            st.session_state[ai_key] = "⚠️ Failed to generate AI suggestion."
+                                    except Exception as e:
+                                        st.session_state[ai_key] = f"⚠️ Error: {str(e)}"
+
+                                st.write("---")
+                                st.subheader("🤖 AI-Generated Suggestion")
+                                st.info(st.session_state[ai_key])
+
+                            # Doctor review
+                            if query['status'] in ["reviewed", "completed"]:
                                 try:
                                     review_response = requests.get(f"{API_URL}/review/{query['id']}")
                                     if review_response.status_code == 200:
@@ -131,12 +144,10 @@ def show_patient_ui():
                                         st.subheader("💡 Final Suggestion from Doctor")
                                         st.success(review["content"])
                                         st.caption(f"Reviewed by Doctor ID: {review['doctor_id']}")
-
                                         if review["approved"]:
                                             st.info("✅ This suggestion was approved by the doctor.")
                                         else:
                                             st.warning("✏️ This is a modified version of the AI suggestion.")
-
                                 except:
                                     st.warning("Could not retrieve doctor's response.")
             else:
