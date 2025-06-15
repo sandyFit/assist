@@ -1,10 +1,10 @@
-🩺 Assist AI - Medical Assistant Platform
+# 🩺 Assist AI - Medical Assistant Platform
 
 A human-in-the-loop AI platform designed to bridge the communication gap between patients with chronic conditions and their doctors.
 
 This project was developed for a hackathon to demonstrate how AI can empower healthcare professionals and reassure patients by acting as an intelligent, safe, and efficient intermediary. It provides a draft suggestion for patient queries which is always reviewed and approved by a doctor before being sent.
 
-🖼️ Project Gallery
+# 🖼️ Project Gallery
 
 A brief look at the Patient and Doctor portals.
 
@@ -16,11 +16,11 @@ Doctor Portal - Review Dashboard
 
 (Insert screenshot of the doctor's dashboard with pending queries here)
 
-🚀 The Problem
+# 🚀 The Problem
 
 For millions living with chronic diseases like diabetes, timely access to their doctor for non-emergency questions is a constant challenge. A strange blood sugar reading or a question about a meal can cause significant anxiety. This "care gap" creates a communication bottleneck for doctors and leaves patients feeling uncertain. Assist AI was built to solve this problem.
 
-✨ The Solution: How It Works
+# ✨ The Solution: How It Works
 
 Assist AI provides a seamless and trustworthy workflow:
 
@@ -43,7 +43,7 @@ Query Management: A dashboard for doctors to review pending queries and approve 
 
 Patient History: A view for patients to see their past submissions and the doctor's final responses.
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 Backend:
 
 Framework: FastAPI
@@ -54,7 +54,7 @@ LLM: DeepSeek (via an OpenAI-compatible API)
 
 Data Validation: Pydantic
 
-Frontend:
+## Frontend:
 
 Framework: Streamlit
 
@@ -76,15 +76,15 @@ hackathon-demo-assist/
         ├── patient.py      # Patient portal UI
         └── doctor.py       # Doctor dashboard UI
 
-🏃 Getting Started
+## 🏃 Getting Started
 To run the application locally, you'll need to set up the environment and run both the backend and frontend services concurrently.
 
-Prerequisites
+#### Prerequisites
 Python 3.9+
 
 An LLM API Key (e.g., from DeepSeek)
 
-Installation & Setup
+#### Installation & Setup
 Clone the repository:
 
 git clone [https://github.com/your-username/hackathon-demo-assist.git](https://github.com/your-username/hackathon-demo-assist.git)
@@ -127,7 +127,7 @@ streamlit run assistMVP/streamlit_app/main.py --server.port 8502
 
 The frontend will be accessible at http://localhost:8502.
 
-🌐 API Endpoints
+## 🌐 API Endpoints
 The backend provides the following key API endpoints:
 
 Method
@@ -160,7 +160,7 @@ GET
 
 Fetches the complete history for a specific patient.
 
-🔮 Future Work
+## 🔮 Future Work
 Persistent Database: Replace the in-memory/JSON storage with a robust database like PostgreSQL or MongoDB.
 
 Real-time Notifications: Implement WebSockets to notify doctors instantly when a new query arrives.
@@ -173,7 +173,7 @@ Expanded Disease Models: Scale the platform to support additional chronic condit
 
 Analytics Dashboard: Provide insights for doctors on query volumes and response times.
 
-👥 The Team
+## 👥 The Team
 Patrick Musyoka - Team Leader / Backend Developer
 
 Min Thiha Tun - Backend Developer
