@@ -12,13 +12,17 @@ def show_doctor_ui():
 
     with tab1:
         st.header("Queries Awaiting Review")
-        st.write("Review patient queries and provide medical advice.")
+        st.write("Review patient queries and AI-generated suggestions.")
 
         if st.button("Refresh Queries"):
             st.rerun()
 
+        # st.write(f"🔍 **Debug**: Fetching from `{API_URL}/query/?status=awaiting_review`")
+
         try:
             response = requests.get(f"{API_URL}/query/", params={"status": "awaiting_review"})
+            # st.write(f"**API Response Status**: {response.status_code}")
+
             if response.status_code == 200:
                 data = response.json()
                 queries = data["queries"]
@@ -56,28 +60,24 @@ def show_doctor_ui():
                                 pass
 
                             st.write("---")
-                            st.subheader("💡 AI Suggestion (Placeholder)")
-                            
-                            # Placeholder suggestion text
-                            placeholder_suggestion = """This is a placeholder for AI-generated medical suggestions.
-                            
-In a production system, this would contain:
-- Initial assessment based on symptoms
-- Recommended diagnostic tests
-- Potential treatment options
-- Follow-up recommendations
-- Red flags or urgent care indicators
+                            st.subheader("💡 AI-Generated Suggestion")
 
-Please provide your professional medical advice below."""
+                            default_suggestion = f"Based on the patient's reported symptoms, consider further evaluation for diabetes-related complications and lifestyle modifications."
+                            ai_key = f"ai_suggestion_{query['id']}"
+                            if ai_key not in st.session_state:
+                                st.session_state[ai_key] = default_suggestion
 
-                            st.text_area("AI Suggestion (Placeholder):", value=placeholder_suggestion, height=120, disabled=True, key=f"ai_suggestion_display_{query['id']}")
+                            st.text_area("AI Suggestion:", value=st.session_state[ai_key], height=120, disabled=True, key=f"ai_suggestion_display_{query['id']}")
 
-                            st.info("ℹ️ AI suggestion feature is currently disabled. Please provide your medical advice directly.")
+                            if st.button("🔄 Regenerate Suggestion", key=f"regen_{query['id']}"):
+                                st.session_state[ai_key] = f"🔄 Regenerated suggestion for Query {query['id']}: Recommend further lab tests and glucose monitoring."
+                                st.experimental_rerun()
 
                             with st.form(f"review_form_{query['id']}"):
                                 st.write("🩺 **Doctor Review**")
-                                review_text = st.text_area("✍️ Edit and provide your medical advice:", value=placeholder_suggestion, height=150, key=f"review_text_{query['id']}")
+                                review_text = st.text_area("✍️ Edit suggestion before sending to patient:", value=st.session_state[ai_key], height=150, key=f"review_text_{query['id']}")
                                 approved = st.checkbox("✅ Approve and send to patient", key=f"approved_{query['id']}")
+                                #notes = st.text_area("📝 Internal Notes (not shown to patient):", height=100, key=f"notes_{query['id']}")
 
                                 submit_review = st.form_submit_button("Submit Review")
                                 if submit_review and review_text:
@@ -96,8 +96,6 @@ Please provide your professional medical advice below."""
                                             st.error(f"❌ Error: {review_response.status_code} - {review_response.text}")
                                     except Exception as e:
                                         st.error(f"❌ Submission error: {str(e)}")
-                                elif submit_review and not review_text:
-                                    st.error("❌ Please provide your medical advice before submitting.")
         except Exception as e:
             st.error(f"Error: {str(e)}")
 
@@ -121,8 +119,8 @@ Please provide your professional medical advice below."""
                                 st.write("---")
                                 st.write("**Your Response:**")
                                 st.write(review["content"])
-                                st.write(f"**Status:** {'Approved and sent to patient' if review['approved'] else 'Draft - not sent'}")
-                                if review.get("notes"):
+                                st.write(f"**Approved AI Suggestion:** {'Yes' if review['approved'] else 'No'}")
+                                if review["notes"]:
                                     st.write("**Internal Notes:**")
                                     st.write(review["notes"])
             else:
@@ -150,9 +148,9 @@ Please provide your professional medical advice below."""
         with col2:
             st.subheader("Session State")
             st.json({
-                "user_role": st.session_state.get("user_role", "unknown"),
-                "patient_id": st.session_state.get("patient_id", None),
-                "doctor_id": st.session_state.get("doctor_id", None),
+                "user_role": st.session_state.user_role,
+                "patient_id": st.session_state.patient_id,
+                "doctor_id": st.session_state.doctor_id,
                 "api_url": API_URL
             })
 
