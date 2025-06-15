@@ -1,12 +1,13 @@
+# UI package initialization
+# This file ensures the ui directory is recognized as a Python package
 import streamlit as st
-from pages.patient_page import show_patient_ui
-from pages.doctor_page import show_doctor_ui
-from pages.welcome_page import show_welcome_ui
+from src.patient_page import show_patient_ui
+from src.doctor_page import show_doctor_ui
+from src.welcome_page import show_welcome_ui
 from dotenv import load_dotenv
 load_dotenv()
 
-
-# App configuration
+# Hide default navigation
 st.set_page_config(
     page_title="Medical AI Assistant",
     page_icon="🏥",
