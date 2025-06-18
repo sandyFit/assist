@@ -30,7 +30,6 @@ class QueryList(BaseModel):
 # Create router
 router = APIRouter()
 
-# Simple triage function (since we don't have the utils module)
 def simple_triage(content: str) -> QueryPriority:
     """Simple triage based on keywords"""
     content_lower = content.lower()
